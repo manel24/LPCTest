@@ -16,24 +16,26 @@ import rx.Subscriber;
 import rx.Subscription;
 
 public class MainActivity extends AppCompatActivity {
-    private Subscription subscription;
-    private MainAdapter adapter;
 
-    private View emptyView;
-    private RecyclerView recyclerView;
+    //private static final String TAG = "MAIN";
+
+    private Subscription msubscription;
+    private MainAdapter madapter;
+
+    private View memptyView;
+    private RecyclerView mpots_recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-       // TODO set content view and assign views
+       // set content view and assign views
+        setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = null; //TODO
+        mpots_recyclerView= (RecyclerView) findViewById(R.id.pots_recycler_view);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
-        FloatingActionButton fab = null;//TODO
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchPots() {
-        subscription = RestClient.getSingleton().pots()
+        msubscription = RestClient.getSingleton().pots()
                 //TODO
                 .subscribe(new Subscriber<List<Pot>>() {
                     @Override
@@ -86,14 +88,14 @@ public class MainActivity extends AppCompatActivity {
                     public void onError(Throwable e) {
 
 
-                        emptyView.setVisibility(View.VISIBLE);
+                        memptyView.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void onNext(List<Pot> pots) {
 
 
-                        emptyView.setVisibility(View.GONE);
+                        memptyView.setVisibility(View.GONE);
 
                         Collections.reverse(pots);
                         //TODO
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchNewPots() {
        //TODO
-        subscription = RestClient.getSingleton().pots()
+        msubscription = RestClient.getSingleton().pots()
                 //TODO
                 .subscribe(new Subscriber<List<Pot>>() {
                     @Override
