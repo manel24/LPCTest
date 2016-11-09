@@ -2,7 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity"
     >
 
 <android.support.design.widget.CoordinatorLayout
@@ -11,6 +10,33 @@
     android:fitsSystemWindows="true"
     tools:context="fr.lepotcommun.lpctest.MainActivity">
 
+    <!-- Adding Recycler view -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/pots_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        />
+    <!--the error message view -->
+    <LinearLayout
+        android:id="@+id/error_msg_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/emoticon_sad" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/network_unavailable" />
+    </LinearLayout>
+
+    <!--  ***********************************  -->
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,14 +50,6 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
-
-    <!-- Adding Recycler view -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/pots_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        />
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

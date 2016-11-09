@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
-//import fr.lepotcommun.lpctest.databinding.PotItemBinding;
+import fr.lepotcommun.lpctest.databinding.PotItemBinding;
 import fr.lepotcommun.lpctest.model.Pot;
 
 
@@ -17,6 +17,11 @@ public class MainAdapter extends RecyclerView.Adapter<PotItemViewHolder> {
     private List<Pot> pots;
     MainAdapter(List<Pot> models) {
         pots = models;
+    }
+
+    // @BindingAdapter("bind:loadImage")
+    public static void loadImageAsync(ImageView imageView, String url) {
+        //todo loadImage
     }
 
     @Override
@@ -43,18 +48,13 @@ public class MainAdapter extends RecyclerView.Adapter<PotItemViewHolder> {
         return 0;
     }
 
-    void setPots(List<Pot> pots) {
-        this.pots = pots;
-        //TODO notifiy data changed
-    }
-
     List<Pot> getPots() {
         return pots;
     }
 
-   // @BindingAdapter("bind:loadImage")
-    public static void loadImageAsync(ImageView imageView, String url) {
-     //todo loadImage
+    void setPots(List<Pot> pots) {
+        this.pots = pots;
+        //TODO notifiy data changed
     }
 }
 

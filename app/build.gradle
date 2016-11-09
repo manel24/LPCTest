@@ -20,7 +20,10 @@ android {
         }
     }
 
-  //TODO
+    //Enable Data Binding
+    /* dataBinding {
+         enabled = true
+     }*/
 }
 
 dependencies {

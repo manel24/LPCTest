@@ -3,7 +3,9 @@ package fr.lepotcommun.lpctest;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -19,9 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
     //private static final String TAG = "MAIN";
 
+    StaggeredGridLayoutManager mStaggeredLayoutManager;
     private Subscription msubscription;
     private MainAdapter madapter;
-
     private View memptyView;
     private RecyclerView mpots_recyclerView;
 
@@ -73,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
     private void setupRecyclerView() {
 
         //TODO setup recycler view
+        mpots_recyclerView.setHasFixedSize(true);
+        mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        mpots_recyclerView.setLayoutManager(mStaggeredLayoutManager);
+        //mpots_recyclerView.setAdapter(madapter);
     }
 
     private void fetchPots() {
