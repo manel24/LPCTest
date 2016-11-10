@@ -54,7 +54,7 @@ public class RestClient {
         public Observable<List<Pot>> pots();
 
         //add a new post
-        @POST("/create-pot")
+        @POST("create-pot")
         public Observable<Void> createPot();
     }
 

@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -70,10 +71,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
         setupRecyclerView();
-
         fetchPots();
     }
 
@@ -83,12 +81,13 @@ public class MainActivity extends AppCompatActivity {
         mpots_recyclerView.setHasFixedSize(true);
         mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         mpots_recyclerView.setLayoutManager(mStaggeredLayoutManager);
+        madapter = new MainAdapter(new ArrayList<Pot>());
         mpots_recyclerView.setAdapter(madapter);
     }
 
     private void fetchPots() {
         msubscription = RestClient.getSingleton().getApi().pots()
-                //TODO
+                //DONE
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Pot>>() {
@@ -109,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                         memptyView.setVisibility(View.GONE);
-
                         Collections.reverse(pots);
+
                         //TODO
                     }
                 });
