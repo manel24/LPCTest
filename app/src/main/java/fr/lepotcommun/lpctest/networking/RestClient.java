@@ -17,7 +17,7 @@ public class RestClient {
 
     private static final String BASE_URL = "https://recrutement.lepotcommuntest.fr/recruting";
     private static RestClient INSTANCE  = new RestClient();
-    //the Retrofit Interface providing REST API
+    //the Retrofit Interface providing a simple REST API
     private PotsApi mPotsApi;
 
 

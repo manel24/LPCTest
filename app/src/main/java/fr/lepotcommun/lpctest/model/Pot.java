@@ -26,8 +26,5 @@ public class Pot {
         return "Pot{'" + name + "'}";
     }
 
-    //TODO
-
-
 
 }

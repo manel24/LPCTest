@@ -18,6 +18,7 @@ import fr.lepotcommun.lpctest.model.Pot;
 
 public class MainAdapter extends RecyclerView.Adapter<PotItemViewHolder> {
     private List<Pot> mpots;
+
     MainAdapter(List<Pot> models) {
         mpots = models;
     }
@@ -27,7 +28,7 @@ public class MainAdapter extends RecyclerView.Adapter<PotItemViewHolder> {
     //this method will be called automatically once the binding starts
     @BindingAdapter("bind:imageUrl")
     public static void loadImageAsync(final ImageView imageView, final String url) {
-
+        //loading remote picture | loading default picture while waiting for server response
         Picasso.with(imageView.getContext()).load(url).placeholder(R.drawable.loading).into(imageView);
     }
 

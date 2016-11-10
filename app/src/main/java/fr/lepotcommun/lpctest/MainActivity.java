@@ -1,5 +1,6 @@
 package fr.lepotcommun.lpctest;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -45,9 +46,11 @@ public class MainActivity extends AppCompatActivity {
         Log.i(MAIN_TAG, "=========Creating views============");
         mpots_recyclerView= (RecyclerView) findViewById(R.id.pots_recycler_view);
         memptyView = (LinearLayout) findViewById(R.id.error_msg_view);
+
         madapter = new MainAdapter(null);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.hideOverflowMenu();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onError(Throwable e) {
                         Log.i(POST_TAG, "============no connection found============ Cause:" + e.toString());
-                        Toast.makeText(getApplicationContext(), "problem adding pot ! ", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "no internet connection! ", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -106,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
                         Log.i(GET_TAG, "============no connection found============ Cause:" + e.toString());
                         memptyView.setVisibility(View.VISIBLE);
+
                     }
 
                     @Override

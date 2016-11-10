@@ -17,7 +17,7 @@
         android:baselineAligned="false"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="match_parent"
