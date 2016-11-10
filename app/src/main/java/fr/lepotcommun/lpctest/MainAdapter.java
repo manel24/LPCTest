@@ -4,6 +4,7 @@ package fr.lepotcommun.lpctest;
 //import android.databinding.DataBindingUtil;
 
 import android.databinding.BindingAdapter;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +26,11 @@ public class MainAdapter extends RecyclerView.Adapter<PotItemViewHolder> {
     //load pot Image using Picasso
     //this method will be called automatically once the binding starts
     @BindingAdapter("bind:imageUrl")
-    public static void loadImageAsync(ImageView imageView, String url) {
-        Picasso.with(imageView.getContext()).load(url).into(imageView);
+    public static void loadImageAsync(final ImageView imageView, final String url) {
+
+        Picasso.with(imageView.getContext()).load(url).placeholder(R.drawable.loading).into(imageView);
     }
+
 
     @Override
     public PotItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

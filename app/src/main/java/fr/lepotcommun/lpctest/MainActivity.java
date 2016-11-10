@@ -9,6 +9,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     StaggeredGridLayoutManager mStaggeredLayoutManager;
     private Subscription msubscription;
     private MainAdapter madapter;
-    private View memptyView;
+    private LinearLayout memptyView;
     private RecyclerView mpots_recyclerView;
 
     @Override
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.i(MAIN_TAG, "=========Creating views============");
         mpots_recyclerView= (RecyclerView) findViewById(R.id.pots_recycler_view);
-        memptyView = findViewById(R.id.error_msg_view);
+        memptyView = (LinearLayout) findViewById(R.id.error_msg_view);
         madapter = new MainAdapter(null);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted() {
                         Log.i(POST_TAG, "============oncompleted============");
-
-
+                        mpots_recyclerView.getAdapter().notifyDataSetChanged();
                     }
 
                     @Override
@@ -72,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(Void voidResponse) {
-                        Toast.makeText(getApplicationContext(), Integer.valueOf(madapter.getItemCount()), Toast.LENGTH_LONG).show();
-                        fetchNewPots();
                     }
                 });
             }
@@ -113,13 +111,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onNext(List<Pot> pots) {
 
-
                         Log.i(GET_TAG, "============Retrieving pots============");
                         memptyView.setVisibility(View.GONE);
                         Collections.reverse(pots);
                         System.out.print(pots);
                         madapter.setPots(pots);
-                        mpots_recyclerView.setAdapter(madapter);
                     }
                 });
 
@@ -143,15 +139,13 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(List<Pot> pots) {
+                        madapter.getPots().addAll(pots);
+                        madapter.notifyDataSetChanged();
+                        System.out.print(pots);
 
                     }
                 });
     }
-
-
-
-
-
 
     @Override
     protected void onDestroy() {
