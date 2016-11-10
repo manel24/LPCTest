@@ -15,7 +15,7 @@ import rx.Observable;
 
 public class RestClient {
 
-    private static final String BASE_URL = "https://recrutement.lepotcommuntest.fr/recruting/";
+    private static final String BASE_URL = "https://recrutement.lepotcommuntest.fr/recruting";
     private static RestClient INSTANCE  = new RestClient();
     //the Retrofit Interface providing REST API
     private PotsApi mPotsApi;
@@ -50,11 +50,11 @@ public class RestClient {
 
     public interface PotsApi {
         //retrieve all pots
-        @GET("get-pots")
+        @GET("/get-pots")
         public Observable<List<Pot>> pots();
 
         //add a new post
-        @POST("create-pot")
+        @POST("/create-pot")
         public Observable<Void> createPot();
     }
 

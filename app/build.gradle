@@ -22,7 +22,7 @@ android {
 
     //Enable Data Binding
     dataBinding {
-         enabled = true
+        enabled = true
     }
 }
 

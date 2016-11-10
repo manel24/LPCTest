@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,7 +24,10 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private static final String TAG = "MAIN";
+    private static final String POST_TAG = "ADD POT";
+    private static final String GET_TAG = "GET ALL POTS";
+    private static final String MAIN_TAG = "MAIN";
+
 
     StaggeredGridLayoutManager mStaggeredLayoutManager;
     private Subscription msubscription;
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
        // set content view and assign views
         setContentView(R.layout.activity_main);
-
+        Log.i(MAIN_TAG, "=========Creating views============");
         mpots_recyclerView= (RecyclerView) findViewById(R.id.pots_recycler_view);
         memptyView = findViewById(R.id.error_msg_view);
         madapter = new MainAdapter(null);
@@ -50,22 +54,26 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(final View view) {
 
                 RestClient.getSingleton().getApi().createPot()
-                        //TODO
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<Void>() {
                     @Override
                     public void onCompleted() {
+                        Log.i(POST_TAG, "============oncompleted============");
+
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.i(POST_TAG, "============no connection found============ Cause:" + e.toString());
                         Toast.makeText(getApplicationContext(), "problem adding pot ! ", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void onNext(Void voidResponse) {
-                        //TODO
-
+                        Toast.makeText(getApplicationContext(), Integer.valueOf(madapter.getItemCount()), Toast.LENGTH_LONG).show();
+                        fetchNewPots();
                     }
                 });
             }
@@ -77,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
 
-        //TODO setup recycler view
+        //setup recycler view
         mpots_recyclerView.setHasFixedSize(true);
         mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         mpots_recyclerView.setLayoutManager(mStaggeredLayoutManager);
@@ -87,19 +95,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchPots() {
         msubscription = RestClient.getSingleton().getApi().pots()
-                //DONE
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Pot>>() {
                     @Override
                     public void onCompleted() {
-
+                        Log.i(GET_TAG, "============oncompleted============");
                     }
 
                     @Override
                     public void onError(Throwable e) {
 
-
+                        Log.i(GET_TAG, "============no connection found============ Cause:" + e.toString());
                         memptyView.setVisibility(View.VISIBLE);
                     }
 
@@ -107,24 +114,26 @@ public class MainActivity extends AppCompatActivity {
                     public void onNext(List<Pot> pots) {
 
 
+                        Log.i(GET_TAG, "============Retrieving pots============");
                         memptyView.setVisibility(View.GONE);
                         Collections.reverse(pots);
-
-                        //TODO
+                        System.out.print(pots);
+                        madapter.setPots(pots);
+                        mpots_recyclerView.setAdapter(madapter);
                     }
                 });
 
     }
 
     private void fetchNewPots() {
-       //TODO
+        madapter.notifyDataSetChanged();
         msubscription = RestClient.getSingleton().getApi().pots()
-                //TODO
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .subscribe(new Subscriber<List<Pot>>() {
                     @Override
                     public void onCompleted() {
-
+                        Log.i(POST_TAG, "============oncompleted============");
                     }
 
                     @Override
@@ -134,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(List<Pot> pots) {
-                      //TODO
+
                     }
                 });
     }
@@ -146,7 +155,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        //TODO
+        //unsubscribe
+        msubscription.unsubscribe();
         super.onDestroy();
     }
 
